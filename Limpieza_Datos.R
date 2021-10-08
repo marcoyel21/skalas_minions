@@ -5,8 +5,10 @@ import_data <- function() {
   library(stringr) #para limpiza regex
   library(stringi) #para limpiza regex
   library(dplyr) #para limpiza regex
+  library(tidyverse)
+  library(ggmap)#para rellenar coordenadas faltantes
   
-  file <- 'data/refugios_nayarit.xlsx'
+  file <- 'refugios_nayarit.xlsx'
   refugios <- data.frame()
   for (i in 1:length(excel_sheets(file))){
     refugios <- rbind(refugios,head(read.xlsx(file, sheet= i, startRow = 7, colNames = F),-1))
@@ -44,26 +46,21 @@ import_data <- function() {
   refugios$telefono<-NULL
   #_____________ 
   #_____________
+  ##### Relleno de coordenadas faltantes con google API ######
+  new_DF <- refugios[is.na(refugios$coordN),]
+  
+  register_google(key = "AIzaSyCq56DZ7EQ-dWakmHlcGic80bnWXYSSh2A", write = TRUE) #registro de llave
+  
+  cc <- map_df(1:nrow(new_DF), ~ geocode(paste(new_DF$calle[.], new_DF$municipio[.] , sep=" "))) #crea df de coordenadas faltantes 
+  
+  refugios[is.na(refugios$coordN), ]$coordN <- cc$lat #rellelna latitud
+  refugios[is.na(refugios$coordW), ]$coordW <- cc$lon #rellena longitud
+  
+  
   return(refugios)
 }
 
-refugios <- import_data()
-
-summary(refugios)
-
-sum(is.na(refugios$coordN))
-sum(is.na(refugios$coordW))
-sum(is.na(refugios$refugio))
-
-library(tidyr)
-# stringi y stringr 
+#refugios <- import_data()
+#new_DF <- refugios[is.na(refugios$coordN),]
 
 
-
-
-                              
-# si eliminamos todas las filas con na's nos quedan de 437 a 425 filas. 
-# refugios <- refugios %>% drop_na() 
-
-# quitando solo las filas con na en las coordenadas nos quedan 430 filas. 
-# refugios <- refugios %>% drop_na(coordN, coordW)
