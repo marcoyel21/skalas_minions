@@ -8,7 +8,7 @@ import_data <- function() {
   library(tidyverse)
   library(ggmap)#para rellenar coordenadas faltantes
   
-  file <- 'refugios_nayarit.xlsx'
+  file <- 'data/refugios_nayarit.xlsx'
   refugios <- data.frame()
   for (i in 1:length(excel_sheets(file))){
     refugios <- rbind(refugios,head(read.xlsx(file, sheet= i, startRow = 7, colNames = F),-1))
@@ -44,6 +44,41 @@ import_data <- function() {
   refugios$vector_telef<-NULL
   refugios$aux_tel<-NULL
   refugios$telefono<-NULL
+  
+  #_____________ 
+  #_____________
+  ##### Limpieza de coordenadas ######
+  refugios<- refugios %>% mutate(## Limpieza particular del id 213
+    #coordN=ifelse(id==213,paste("21",coordN,sep="°"),coordN),
+    ### para coordN
+    coordN1=stri_extract_all(coordN,regex="[0-9]{2,3}"),
+    coordN2=paste(as.character(lapply(coordN1, `[`, 1)),
+                  as.character(lapply(coordN1, `[`, 2)),sep = "°"),
+    coordN3=paste(as.character(lapply(coordN1, `[`, 4)),"\"", sep = ""),
+    coordN4=paste(as.character(lapply(coordN1, `[`, 3)),coordN3, sep="."),
+    coordN=paste(coordN2,coordN4, sep="\'"),
+    ### para coordW
+    coordW1=stri_extract_all(coordW,regex="[0-9]{2,3}"),
+    coordW2=paste(as.character(lapply(coordW1, `[`, 1)),
+                  as.character(lapply(coordW1, `[`, 2)),sep = "°"),
+    coordW3=paste(as.character(lapply(coordW1, `[`, 4)),"\"", sep = ""),
+    coordW4=paste(as.character(lapply(coordW1, `[`, 3)),coordW3, sep="."),
+    coordW=paste(coordW2,coordW4, sep="\'"),
+    ## Agrego NAs
+    coordN=ifelse(str_detect(coordN,"NA"),NA,coordN),
+    coordW=ifelse(str_detect(coordW,"NA"),NA,coordW)
+  )
+  refugios$coordN1<-NULL
+  refugios$coordN2<-NULL
+  refugios$coordN3<-NULL
+  refugios$coordN4<-NULL
+  
+  refugios$coordW1<-NULL
+  refugios$coordW2<-NULL
+  refugios$coordW3<-NULL
+  refugios$coordW4<-NULL
+  
+
   #_____________ 
   #_____________
   ##### Relleno de coordenadas faltantes con google API ######
@@ -57,10 +92,11 @@ import_data <- function() {
   refugios[is.na(refugios$coordW), ]$coordW <- cc$lon #rellena longitud
   
   
+  
   return(refugios)
 }
 
-#refugios <- import_data()
+refugios <- import_data()
 #new_DF <- refugios[is.na(refugios$coordN),]
 
 
