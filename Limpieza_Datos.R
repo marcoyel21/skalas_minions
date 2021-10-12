@@ -83,8 +83,8 @@ import_data <- function() {
   #_____________
   ##### Relleno de coordenadas faltantes con google API ######
   new_DF <- refugios[is.na(refugios$coordN),]
-  
-  register_google(key = "AIzaSyCq56DZ7EQ-dWakmHlcGic80bnWXYSSh2A", write = TRUE) #registro de llave
+  #################################################################################PONER LLAVE API DE GOOGLE
+  register_google(key = "PONER LLAVE AQUI", write = TRUE) #registro de llave
   
   cc <- map_df(1:nrow(new_DF), ~ geocode(paste(new_DF$calle[.], new_DF$municipio[.] , sep=" "))) #crea df de coordenadas faltantes 
   
