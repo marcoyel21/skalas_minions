@@ -66,8 +66,14 @@ import_data <- function() {
     coordW=paste(coordW2,coordW4, sep="\'"),
     ## Agrego NAs
     coordN=ifelse(str_detect(coordN,"NA"),NA,coordN),
-    coordW=ifelse(str_detect(coordW,"NA"),NA,coordW)
+    coordW=ifelse(str_detect(coordW,"NA"),NA,coordW),
+    ##### Limpieza de coordenadas ad hoc para el id 434######
+    coord_aux=coordN,
+    coordN=ifelse(id==434,coordW,coordN),
+    coordW=ifelse(id==434,coord_aux,coordW)
   )
+  refugios$coord_aux<-NULL
+  
   refugios$coordN1<-NULL
   refugios$coordN2<-NULL
   refugios$coordN3<-NULL
@@ -84,14 +90,12 @@ import_data <- function() {
   ##### Relleno de coordenadas faltantes con google API ######
   new_DF <- refugios[is.na(refugios$coordN),]
   #################################################################################PONER LLAVE API DE GOOGLE
-  register_google(key = "PONER LLAVE AQUI", write = TRUE) #registro de llave
+  register_google(key = "AIzaSyCq56DZ7EQ-dWakmHlcGic80bnWXYSSh2A", write = TRUE) #registro de llave
   
   cc <- map_df(1:nrow(new_DF), ~ geocode(paste(new_DF$calle[.], new_DF$municipio[.] , sep=" "))) #crea df de coordenadas faltantes 
   
   refugios[is.na(refugios$coordN), ]$coordN <- cc$lat #rellelna latitud
   refugios[is.na(refugios$coordW), ]$coordW <- cc$lon #rellena longitud
-  
-  
   
   return(refugios)
 }
