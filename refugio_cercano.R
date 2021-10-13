@@ -2,7 +2,22 @@ library(geosphere)
 #install.packages("leaflet")
 library(leaflet)
 
-r2 <- tail(refugios,3)
+r2 <- refugios %>% filter(id != 337)%>%
+  filter(id != 75)%>% 
+  filter(id != 83)%>% 
+  filter(id != 84)%>% 
+  filter(id != 338)%>% 
+  filter(id != 336)%>% 
+  filter(id != 118)%>% 
+  filter(id != 286)%>% 
+  filter(id != 213)%>% 
+  filter(id != 283)%>% 
+  filter(id != 121)%>% 
+  filter(id != 310)%>% 
+    filter(id != 281)
+
+
+
 
 #limpieza (diagonal final)
 r2$coordN <- substr(r2$coordN,1,nchar(r2$coordN)-1)

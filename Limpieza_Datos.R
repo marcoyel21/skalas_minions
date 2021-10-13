@@ -53,14 +53,14 @@ import_data <- function() {
     ### para coordN
     coordN1=stri_extract_all(coordN,regex="[0-9]{2,3}"),
     coordN2=paste(as.character(lapply(coordN1, `[`, 1)),
-                  as.character(lapply(coordN1, `[`, 2)),sep = "°"),
+                  as.character(lapply(coordN1, `[`, 2)),sep = "º"),
     coordN3=paste(as.character(lapply(coordN1, `[`, 4)),"\"", sep = ""),
     coordN4=paste(as.character(lapply(coordN1, `[`, 3)),coordN3, sep="."),
     coordN=paste(coordN2,coordN4, sep="\'"),
     ### para coordW
     coordW1=stri_extract_all(coordW,regex="[0-9]{2,3}"),
     coordW2=paste(as.character(lapply(coordW1, `[`, 1)),
-                  as.character(lapply(coordW1, `[`, 2)),sep = "°"),
+                  as.character(lapply(coordW1, `[`, 2)),sep = "º"),
     coordW3=paste(as.character(lapply(coordW1, `[`, 4)),"\"", sep = ""),
     coordW4=paste(as.character(lapply(coordW1, `[`, 3)),coordW3, sep="."),
     coordW=paste(coordW2,coordW4, sep="\'"),
@@ -90,7 +90,7 @@ import_data <- function() {
   ##### Relleno de coordenadas faltantes con google API ######
   new_DF <- refugios[is.na(refugios$coordN),]
   #################################################################################PONER LLAVE API DE GOOGLE
-  register_google(key = "AIzaSyCq56DZ7EQ-dWakmHlcGic80bnWXYSSh2A", write = TRUE) #registro de llave
+  register_google(key = "token aqui", write = TRUE) #registro de llave
   
   cc <- map_df(1:nrow(new_DF), ~ geocode(paste(new_DF$calle[.], new_DF$municipio[.] , sep=" "))) #crea df de coordenadas faltantes 
   
