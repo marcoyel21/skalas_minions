@@ -1,4 +1,6 @@
 library(geosphere)
+#install.packages("leaflet")
+library(leaflet)
 
 r2 <- tail(refugios,3)
 
@@ -18,10 +20,15 @@ refugio_cercano <- function (long,lat){
 
   r2 <- r2 %>% mutate(distancia = distVincentyEllipsoid(c(long,lat),  r2[,17:18])/1000) #en km
   
-  head(r2[order(r2$distancia,decreasing = TRUE),],1)
+  head(r2[order(r2$distancia,decreasing = TRUE),],1) %>% select(w,n)
 
 
   
 }
 
+ref <- refugio_cercano(150.234,23.450) #ejemplo
 
+m <- leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(lng=-ref[[1]], lat=ref[[2]], popup="Refugio más cercano")
+m  # Print the map
