@@ -49,7 +49,7 @@ server <- function(input, output, session) {
       #extrae la ubicacion para mostrar un mapa con el refugio
       ubi<-paste(input$calle, input$num , input$mun, sep=" ")
       ubi<-geocode(ubi)
-      ref<-refugio_cercano(ubi[[1]],ubi[[2]]) #PAU wtf, como deben entrar las coordenadas?
+      ref<-refugio_cercano(abs(ubi[[1]]),abs(ubi[[2]]))
       m2 <-leaflet() %>%
         addTiles() %>%  # Add default OpenStreetMap map tiles
         addMarkers(lng=-ref[[1]], lat=ref[[2]])
@@ -60,7 +60,7 @@ server <- function(input, output, session) {
       #simpelemente muestra el data frame filtrado por el id del refugio
       ubi<-paste(input$calle, input$num , input$mun, sep=" ")
       ubi<-geocode(ubi)
-      ref<-refugio_cercano(ubi[[1]],ubi[[2]])#PAU wtf, como deben entrar las co
+      ref<-refugio_cercano(abs(ubi[[1]]),abs(ubi[[2]]))
       tabla<-refugios %>% 
         filter(id==ref[[3]]) %>% 
         select(-coordN,-coordW,-altitud) 

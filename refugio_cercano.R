@@ -40,17 +40,19 @@ refugio_cercano <- function (long,lat){
   
   r2 <- r2 %>% mutate(distancia = distVincentyEllipsoid(c(long,lat),  r2[,c('w','n')])/1000) #en km
   
-  head(r2[order(r2$distancia,decreasing = TRUE),],1) %>% select(w,n,id)
+  head(r2[order(r2$distancia,decreasing = FALSE),],1) %>% select(w,n,id,municipio)
 
 }
 
 #####con municipio#####
-refugios_municipio <- function(municipio) {
-  coord <- r2 %>% filter(r2$municipio==municipio) %>% select(w,n) 
+refugios_municipio <- function(mun) {
+  coord <- r2 %>% filter(municipio==mun) %>% select(w,n) 
   m <- leaflet() %>%
     addTiles() %>%  # Add default OpenStreetMap map tiles
     addMarkers(lng=-coord[[1]], lat=coord[[2]])
   m  # Print the map
   
 }
+
+
 
