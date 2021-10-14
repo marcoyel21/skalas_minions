@@ -1,7 +1,9 @@
 library(geosphere)
-#install.packages("leaflet")
+library(readr)
 library(leaflet)
-
+library(dplyr)
+library(purrr)
+#refugios<-read_csv("refugios.csv")
 r2 <- refugios %>% filter(id != 337)%>%
   filter(id != 75)%>% 
   filter(id != 83)%>% 
@@ -16,7 +18,7 @@ r2 <- refugios %>% filter(id != 337)%>%
   filter(id != 310)%>% 
     filter(id != 281)
 
-
+#r2<-tail(r2,1)
 
 
 #limpieza (diagonal final)
@@ -38,17 +40,9 @@ refugio_cercano <- function (long,lat){
   
   r2 <- r2 %>% mutate(distancia = distVincentyEllipsoid(c(long,lat),  r2[,c('w','n')])/1000) #en km
   
-  head(r2[order(r2$distancia,decreasing = TRUE),],1) %>% select(w,n)
+  head(r2[order(r2$distancia,decreasing = TRUE),],1) %>% select(w,n,id)
 
 }
-
-ref <- refugio_cercano(150.234,23.450) #ejemplo
-
-m <- leaflet() %>%
-  addTiles() %>%  # Add default OpenStreetMap map tiles
-  addMarkers(lng=-ref[[1]], lat=ref[[2]], popup="Refugio más cercano")
-m  # Print the map
-
 
 #####con municipio#####
 refugios_municipio <- function(municipio) {
@@ -59,3 +53,4 @@ refugios_municipio <- function(municipio) {
   m  # Print the map
   
 }
+

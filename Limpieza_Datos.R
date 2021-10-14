@@ -70,7 +70,9 @@ import_data <- function() {
     ##### Limpieza de coordenadas ad hoc para el id 434######
     coord_aux=coordN,
     coordN=ifelse(id==434,coordW,coordN),
-    coordW=ifelse(id==434,coord_aux,coordW)
+    coordW=ifelse(id==434,coord_aux,coordW),
+    ##### Limpieza de coordenadas ad hoc para el id 338######
+    calle=ifelse(id==338,str_remove(calle,"POR ENTRADA PRINCIPAL DEL "),calle)
   )
   refugios$coord_aux<-NULL
   
@@ -90,7 +92,7 @@ import_data <- function() {
   ##### Relleno de coordenadas faltantes con google API ######
   new_DF <- refugios[is.na(refugios$coordN),]
   #################################################################################PONER LLAVE API DE GOOGLE
-  register_google(key = "token aqui", write = TRUE) #registro de llave
+  register_google(key = "TOKEN", write = TRUE) #registro de llave
   
   cc <- map_df(1:nrow(new_DF), ~ geocode(paste(new_DF$calle[.], new_DF$municipio[.] , sep=" "))) #crea df de coordenadas faltantes 
   
@@ -101,6 +103,8 @@ import_data <- function() {
 }
 
 refugios <- import_data()
+#write_csv(refugios,"refugios.csv")
 #new_DF <- refugios[is.na(refugios$coordN),]
 
+#a<-paste(new_DF$calle, new_DF$municipio , sep=" ")
 
