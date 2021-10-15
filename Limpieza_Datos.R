@@ -1,3 +1,4 @@
+
 import_data <- function() {
   # Librerias
   library(openxlsx)
@@ -97,7 +98,15 @@ import_data <- function() {
   cc <- map_df(1:nrow(new_DF), ~ geocode(paste(new_DF$calle[.], new_DF$municipio[.] , sep=" "))) #crea df de coordenadas faltantes 
   
   refugios[is.na(refugios$coordN), ]$coordN <- cc$lat #rellelna latitud
-  refugios[is.na(refugios$coordW), ]$coordW <- cc$lon #rellena longitud
+  refugios[is.na(refugios$coordW), ]$coordW <- abs(cc$lon) #rellena longitud
+  
+  ###############
+  ## Cambio de coordenadas a strings ## 
+  
+  refugios$coordN <- as.character(refugios$coordN)
+  refugios$coordW <- as.character(refugios$coordW)
+  
+  
   
   return(refugios)
 }
@@ -107,5 +116,4 @@ refugios <- import_data()
 #new_DF <- refugios[is.na(refugios$coordN),]
 
 #a<-paste(new_DF$calle, new_DF$municipio , sep=" ")
-
 
