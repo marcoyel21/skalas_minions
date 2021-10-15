@@ -5,7 +5,7 @@
 
 source("1_packages.R")
 source("2_functions.R")
-data <- import_data() %>% coord_to_float() #ETL
+source("3_prueba_eval.R")
 r_colors <- rgb(t(col2rgb(colors()) / 255))
 names(r_colors) <- colors()
 
@@ -96,7 +96,7 @@ server <- function(input, output, session) {
       ubi<-paste(input$calle, input$num , input$mun, sep=" ")
       ubi<-geocode(ubi)
       ref<-motor_refugio_cercano(abs(ubi[[1]]),abs(ubi[[2]]))
-      refugios %>% 
+      data %>% 
         filter(id==ref[[3]]) %>% 
         select(-coordN,-coordW,-altitud) 
       })
@@ -114,7 +114,7 @@ server <- function(input, output, session) {
       ubi<-paste(input$calle, input$num , input$mun, sep=" ")
       ubi<-geocode(ubi)
       ref<-motor_refugio_cercano(abs(ubi[[1]]),abs(ubi[[2]]))
-      refugios %>% 
+      data %>% 
         filter(municipio==ref[[4]]) %>% 
         select(-coordN,-coordW,-altitud) 
     })

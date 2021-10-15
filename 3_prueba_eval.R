@@ -3,8 +3,8 @@
 #### SCRIPT DE PRUEBA-EVALUACION ###########################
 ############################################################
 
-#Este script no forma parte de la app pero es un archivo auxiliar en la evaluacion
-#si lo que se quiere es evaluar a detalle los pasos de la tarea.
+#Este script es un archivo auxiliar en la evaluacion y ademas sirve para probar las funciones antes de ponerlas en la app.
+#si lo que se quiere es evaluar a detalle los pasos de la tarea este script es muy util.
 # En este script se muestra de manera muy clara y directa cada aspecto preguntado.
 # Ademas, este script resume todo lo que pasa detrás de nuestra shiny app.
 
@@ -52,3 +52,4 @@ data <- import_data() %>% coord_to_float()
   # Para esta parte integramos unos campos en la app que solicitan información al usuario
   # Posteriormente se solicita a la API de google información sobre las coordenadas de la ubicación que puso el usuario
   # Con esa ubicación se corren en vivo las funciones mostradas en este script.
+  

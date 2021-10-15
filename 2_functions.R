@@ -3,6 +3,12 @@
 #### FUNCIONES RELACIONADAS CON EL ETL #####################
 ############################################################
 
+###########################################
+### En esta parte se debe ingresar el token de la API de Google para 
+TOKEN<-"nananana"
+###########################################
+
+
 # En esta seccion para el ETL se usan dos funciones.
 # En primer lugar import_data para importar, acomodar, limpiar e inputar datos
 # En segundo lugar coord_to_float para transformar las coordenadas a un formato mas amigable para leaflet
@@ -107,7 +113,7 @@ import_data <- function() {
   ##### Relleno de coordenadas faltantes con google API ######
   new_DF <- refugios[is.na(refugios$coordN),]
   #################################################################################PONER LLAVE API DE GOOGLE
-  register_google(key = "TOKEN", write = TRUE) #registro de llave
+  register_google(key = TOKEN, write = TRUE) #registro de llave
 
   cc <- map_df(1:nrow(new_DF), ~ geocode(paste(new_DF$refugio[.],new_DF$municipio[.] ,"Nayarit México", sep=" "))) #crea df de coordenadas faltantes 
   
@@ -133,15 +139,15 @@ coord_to_float<-function(data){
   #Parte I: DIVISION EN 2
   
   # Dataset con coordenadas en grados
-  good_subset<- refugios %>% filter(str_detect(coordN,"\\'"))
+  good_subset<- data %>% filter(str_detect(coordN,"\\'"))
   
   # Dataset con coordenadas en numero
   
-  a<-unique(refugios$id)
+  a<-unique(data$id)
   b<-unique(good_subset$id)
   c<-setdiff(a, b)
   
-  trouble_subset<- refugios %>% filter(id %in% c)
+  trouble_subset<- data %>% filter(id %in% c)
   
   #Parte II: CONVERSION DE GRADO A NUMERICO
   
