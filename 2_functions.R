@@ -107,7 +107,7 @@ import_data <- function() {
   ##### Relleno de coordenadas faltantes con google API ######
   new_DF <- refugios[is.na(refugios$coordN),]
   #################################################################################PONER LLAVE API DE GOOGLE
-  register_google(key = "AIzaSyCq56DZ7EQ-dWakmHlcGic80bnWXYSSh2A", write = TRUE) #registro de llave
+  register_google(key = "TOKEN", write = TRUE) #registro de llave
 
   cc <- map_df(1:nrow(new_DF), ~ geocode(paste(new_DF$refugio[.],new_DF$municipio[.] ,"Nayarit México", sep=" "))) #crea df de coordenadas faltantes 
   
