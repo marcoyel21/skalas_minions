@@ -19,7 +19,7 @@ Se encuentran los siguientes archivos:
 
 2_functions.R <--- Funciones que se desarrollaron para el ETL y motor solicitado.
 
-**En functions.R es necesario agregar un TOKEN de activación API"**
+## En functions.R es necesario agregar un TOKEN de activación "API"
 
 3_prueba_eval <---Archivo donde se prueban las funciones pre deployment y se detallan puntualmente las necesidades de negocio, el funcionamiento detras de la app y donde se pueden realizar pruebas de las funciones. 
  
