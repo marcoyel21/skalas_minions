@@ -2,7 +2,7 @@
 ############################################################
 #### Parte 1: Requisitos ###################################
 ############################################################
-renv::restore() #####POR FAVOR CORRER EL RESTORE DE MANERA CORRECTA (Es decir, en caso de desincronizacion darle un si)
+#renv::init() #####FAVOR DE PONER OPCION 1
 source("1_packages.R")
 source("2_functions.R")
 source("3_prueba_eval.R")
