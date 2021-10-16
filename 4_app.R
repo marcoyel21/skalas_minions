@@ -2,7 +2,7 @@
 ############################################################
 #### Parte 1: Requisitos ###################################
 ############################################################
-
+renv::snapshot() 
 source("1_packages.R")
 source("2_functions.R")
 source("3_prueba_eval.R")
@@ -98,7 +98,7 @@ server <- function(input, output, session) {
       ref<-motor_refugio_cercano(abs(ubi[[1]]),abs(ubi[[2]]))
       data %>% 
         filter(id==ref[[3]]) %>% 
-        select(-coordN,-coordW,-altitud) 
+        select(-coordN,-coordW,-altitud,-w,-n) 
       })
     
     mis_refugios <- eventReactive(input$go2, {
@@ -116,7 +116,7 @@ server <- function(input, output, session) {
       ref<-motor_refugio_cercano(abs(ubi[[1]]),abs(ubi[[2]]))
       data %>% 
         filter(municipio==ref[[4]]) %>% 
-        select(-coordN,-coordW,-altitud) 
+        select(-coordN,-coordW,-altitud,-w,-n) 
     })
     
   #_____________   #PARTE 3.2 RENDER DE FUNCIONES INTERACTIVAS

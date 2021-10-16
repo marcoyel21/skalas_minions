@@ -5,7 +5,7 @@
 
 ###########################################
 ### En esta parte se debe ingresar el token de la API de Google para 
-TOKEN<-"nananana"
+TOKEN<-"AIzaSyCq56DZ7EQ-dWakmHlcGic80bnWXYSSh2A"
 ###########################################
 
 
