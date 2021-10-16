@@ -14,7 +14,7 @@ En este repositorio se organiza el desarrollo de la app y de la tarea 1 de Estad
 
 Se encuentran los siguientes archivos:
 
-app.R <--- El archivo principal desde donde se corre la app de Shiny. Las dependencias son 1_packages.R, 2_functions.R y 3_prueba_eval.
+- app.R <--- El archivo principal desde donde se corre la app de Shiny. Las dependencias son 1_packages.R, 2_functions.R y 3_prueba_eval.
 
  - 1_packages.R <---Paquetes necesarios
 
