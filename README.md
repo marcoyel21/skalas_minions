@@ -6,7 +6,7 @@
 - Marco Antonio Ramos    142244
 - Paulina Hernández      149131
 
-...
+Desde este [link](https://marcoyel21.shinyapps.io/skalas_minions/) puedes interactuar con nuestro producto final. 
 
 
 
